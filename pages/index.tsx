@@ -7,7 +7,6 @@ import { TextBlock } from '@/components/TextBlock';
 import TopBar from '@/components/TopBar';
 import { OpenAIModel, TranslateBody } from '@/types/types';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -21,10 +20,19 @@ export default function Home() {
   const [hasTranslated, setHasTranslated] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string>('');
   const [tab, setTab] = useState(2)
-  const [token, setToken] = useState(0)
+  const [token, setToken] = useState<number>(0)
 
   const handleTranslate = async () => {
     const maxCodeLength = model === 'gpt-3.5-turbo' ? 6000 : 12000;
+
+    if(tab == 1 && token == 0){
+      Swal.fire({
+        icon: 'error',
+        title: 'Maaf tokenmu habis',
+        // text: 'Hub'
+      })
+      return;
+    }
 
     if (!apiKey && tab == 2) {
       Swal.fire({
@@ -63,19 +71,14 @@ export default function Home() {
     setLoading(true);
     setOutputCode('');
 
-    if(tab == 1){
-      setApiKey("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")
-      setModel("gpt-3.5-turbo")
-    }
-
     const controller = new AbortController();
 
     const body: TranslateBody = {
       inputLanguage,
       outputLanguage,
       inputCode,
-      model,
-      apiKey,
+      model: tab == 1 ? "gpt-3.5-turbo" : model,
+      apiKey: tab == 1 ? "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" : apiKey,
     };
 
     const response = await fetch('/api/translate', {
@@ -165,7 +168,7 @@ export default function Home() {
   useEffect(() => {
     const getToken: string | null = localStorage.getItem("apiKey2")
     if(getToken){
-      setToken(getToken)
+      setToken(Number(getToken))
     }else{
       localStorage.setItem("apiKey2", JSON.stringify(4))
       setToken(4)
@@ -300,20 +303,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className='flex items-center justify-between container py-5 mx-auto bg-trans'>
-        <h1><span className='text-sm text-zinc-400'>by</span> Zinedine</h1>
-
-        <div className='space-x-8 flex items-center'>
-          <Link href="/">
-            <h1>Dukung Developer</h1>
-          </Link>
-          <Link href="/">
-            <h1>OpenAI</h1>
-          </Link>
-        </div>
-        <p className="mt-6 text-sm text-gray-500 lg:mt-0 dark:text-gray-400">© Copyright 2024. </p>
-      </div>
-      {/* <Footer /> */}
+      
+      <Footer />
     </>
   );
 }

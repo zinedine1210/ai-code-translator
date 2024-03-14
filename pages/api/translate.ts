@@ -18,6 +18,8 @@ const handler = async (req: Request): Promise<Response> => {
       apiKey,
     );
 
+    console.log(stream)
+
     return new Response(stream);
   } catch (error) {
     console.error(error);
