@@ -8,12 +8,12 @@ interface Props {
 
 export const LanguageSelect: FC<Props> = ({ language, onChange }) => {
   const [open, setOpen] = useState(false)
-  const dropRef = useRef(null)
+  const dropRef = useRef<HTMLInputElement>(null);
   const [options, setOptions] = useState([])
   const [keyword, setKeyword] = useState('')
 
-  const handleOutsideClick = (event: Event) => {
-      if (dropRef.current) {
+  const handleOutsideClick = (event:any) => {
+      if (dropRef.current && !dropRef.current.contains(event.target)) {
         setOpen(false);
       }
   };
