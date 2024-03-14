@@ -1,4 +1,5 @@
-import type { FC } from 'react';
+import { useRef, type FC, useState, useEffect } from 'react';
+import { BiChevronDown } from 'react-icons/bi';
 
 interface Props {
   language: string;
@@ -6,24 +7,61 @@ interface Props {
 }
 
 export const LanguageSelect: FC<Props> = ({ language, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
+  const [open, setOpen] = useState(false)
+  const dropRef = useRef(null)
+  const [options, setOptions] = useState([])
+  const [keyword, setKeyword] = useState('')
+
+  const handleOutsideClick = (event: Event) => {
+      if (dropRef.current) {
+        setOpen(false);
+      }
+  };
+
+  useEffect(() => {
+      document.addEventListener('mousedown', handleOutsideClick);
+      return () => {
+          document.removeEventListener('mousedown', handleOutsideClick);
+      };
+  }, [])
+
+
+  const handleChange = (value: string) => {
+    onChange(value);
   };
 
   return (
-    <select
-      className="w-full rounded-md bg-[#1F2937] px-4 py-2 text-neutral-200"
-      value={language}
-      onChange={handleChange}
-    >
-      {languages
-        .sort((a, b) => a.label.localeCompare(b.label))
-        .map((language) => (
-          <option key={language.value} value={language.value}>
-            {language.label}
-          </option>
-        ))}
-    </select>
+    <div ref={dropRef} className="relative">
+        <button onClick={() => setOpen(!open)} className='flex items-center justify-between w-full bg-black text-white py-2 px-5 rounded-md'>
+          {language}
+          <BiChevronDown className='text-2xl'/>
+        </button>
+
+        <div className={`${open ? "visible scale-100":"invisible scale-0"} z-20 ease-in-out duration-300 origin-top absolute top-full right-0 w-full shadow-md rounded-b-md backdrop-blur-md dark:bg-black dark:border-2 dark:border-white/20 h-fit max-h-[250px] overflow-hidden hover:overflow-y-auto`}>
+            <div className="mb-2 p-2">
+                <input type="text" value={keyword} className="input-style w-full" onChange={e => setKeyword(e.target.value)} placeholder="Search by label"/>
+            </div>
+
+            {
+                languages && languages.length > 0 ? languages
+                .sort((a, b) => a.label.localeCompare(b.label))
+                .filter(res => {
+                    if(!res['label'].toLowerCase().includes(keyword.toLowerCase())){
+                        return false
+                    }
+                    return res
+                }).map((item, index) => {
+                    return (
+                        <button type="button" key={index} className={`${item['value'] == language ? "bg-blue-400":""} text-white duration-300 text-start py-1 px-2 hover:bg-blue-500 dark:hover:bg-dark2 text-sm w-full `} onClick={() => handleChange(item.value)}>
+                            {item['label']}
+                        </button>
+                    )
+                })
+                :
+                "Nothing Language"
+            }
+        </div>
+    </div>
   );
 };
 

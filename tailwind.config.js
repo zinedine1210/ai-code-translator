@@ -4,5 +4,7 @@ module.exports = {
   theme: {
     extend: {}
   },
+  darkMode: 'class',
+  mode: 'jit',
   plugins: []
 };
