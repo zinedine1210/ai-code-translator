@@ -181,8 +181,8 @@ export default function Home() {
     if(getToken){
       setToken(Number(getToken))
     }else{
-      localStorage.setItem("apiKey2", JSON.stringify(4))
-      setToken(4)
+      localStorage.setItem("apiKey2", JSON.stringify(10))
+      setToken(10)
     }
   }, [])
 
