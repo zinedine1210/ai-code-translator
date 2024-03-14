@@ -3,10 +3,10 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div className='flex items-center justify-between container py-5 mx-auto bg-trans'>
-        <h1><span className='text-sm text-zinc-400'>by</span> Zinedine</h1>
+    <div className='px-5 xl:px-0 xl:flex items-center justify-between container py-5 mx-auto bg-trans'>
+        <h1 className='font-semibold mb-5 xl:mb-0 text-xl'><span className='text-sm text-zinc-400'>by</span> Dine</h1>
 
-        <div className='space-x-8 flex items-center'>
+        <div className='space-x-8 xl:flex items-center'>
           <Link href="/">
             <h1>Dukung Developer</h1>
           </Link>

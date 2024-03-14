@@ -181,8 +181,8 @@ export default function Home() {
     if(getToken){
       setToken(Number(getToken))
     }else{
-      localStorage.setItem("apiKey2", JSON.stringify(10))
-      setToken(10)
+      localStorage.setItem("apiKey2", JSON.stringify(7))
+      setToken(7)
     }
   }, [])
 
@@ -199,10 +199,10 @@ export default function Home() {
       </Head>
 
       <TopBar />
-      <div className="flex h-full min-h-screen flex-col items-center bg-white dark:bg-gradient-to-br from-[#000000] via-[#191e29] to-[#313c52] px-4 pb-20 dark:text-neutral-200 sm:px-10">
+      <div className="pt-10 xl:pt-0 flex h-full min-h-screen flex-col items-center bg-white dark:bg-gradient-to-br from-[#000000] via-[#191e29] to-[#313c52] px-4 pb-20 dark:text-neutral-200 sm:px-10">
         <div className="mt-10 flex flex-col items-center justify-center sm:mt-20">
           <div className="text-4xl font-bold">Code Translator</div>
-          <p className='tracking-wider text-sm'>Use AI to translate code from one language to another.</p>
+          <p className='tracking-wider text-sm text-center'>Use AI to translate code from one language to another.</p>
         </div>
 
         <div className="pt-3 flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
