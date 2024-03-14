@@ -20,6 +20,8 @@ export default function Home() {
   const [hasTranslated, setHasTranslated] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string>('');
   const [tab, setTab] = useState(2)
+  const apikey = 'sk-//eZsE7NDaah//zAxahtWZrRT3B//lbkFJuLVOPWC//ZTli9JDIXmt//Ye'
+  const [defaultKey, setDefaultKey] = useState('')
   const [token, setToken] = useState<number>(0)
 
   const handleTranslate = async () => {
@@ -73,13 +75,22 @@ export default function Home() {
 
     const controller = new AbortController();
 
+    let getmyapi = ''
+    if(tab == 1){
+      getmyapi = apikey.split('//').join("")
+    }else{
+      getmyapi = apiKey
+    }
+
     const body: TranslateBody = {
       inputLanguage,
       outputLanguage,
       inputCode,
       model: tab == 1 ? "gpt-3.5-turbo" : model,
-      apiKey: tab == 1 ? "sk-//eZsE7NDaah//zAxahtWZrRT3B//lbkFJuLVOPWC//ZTli9JDIXmt//Ye" : apiKey,
+      apiKey: getmyapi,
     };
+
+
 
     const response = await fetch('/api/translate', {
       method: 'POST',
