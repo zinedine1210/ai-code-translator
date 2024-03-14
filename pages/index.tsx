@@ -189,7 +189,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Code Translator by Zinedine</title>
+        <title>Code Translator by Dine</title>
         <meta
           name="description"
           content="Use AI to translate code from one language to another."
