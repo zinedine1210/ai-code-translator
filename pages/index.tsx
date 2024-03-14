@@ -78,7 +78,7 @@ export default function Home() {
       outputLanguage,
       inputCode,
       model: tab == 1 ? "gpt-3.5-turbo" : model,
-      apiKey: apiKey,
+      apiKey: tab == 1 ? "sk-//eZsE7NDaah//zAxahtWZrRT3B//lbkFJuLVOPWC//ZTli9JDIXmt//Ye" : apiKey,
     };
 
     const response = await fetch('/api/translate', {
